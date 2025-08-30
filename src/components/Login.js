@@ -1,11 +1,24 @@
+import { checkValidData } from '../utils/validate';
 import Header from './Header';
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const Login = () => {
     const [isSignInForm, setIsSignInForm] = useState(true);
+    const [errorMessage, setErrorMessage] = useState('');
+    const name = useRef(null);
+    const email = useRef(null);
+    const password = useRef(null);
 
     function toggleSignInForm() {
         setIsSignInForm(!isSignInForm);
+    }
+
+    function handleButtonClick () {
+        const message = checkValidData(email.current.value, password.current.value)
+
+        if (message) {
+            setErrorMessage(message);
+        }
     }
 
     return (
@@ -31,13 +44,15 @@ const Login = () => {
                     <div className="bg-black bg-opacity-75 rounded-md px-16 py-16">
                         <h1 className="text-white text-3xl font-bold mb-8">{isSignInForm ? "Sign In" : "Sign Up"}</h1>
 
-                        <form className="space-y-4">
+                        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                             {!isSignInForm && (
                                 <div>
                                     <input
+                                        ref={name}
                                         type="text"
                                         placeholder="Full Name"
                                         name="full_name"
+                                        autoComplete='off'
                                         className="w-full px-4 py-4 bg-gray-700 text-white rounded-md border border-gray-600 focus:border-white focus:outline-none placeholder-gray-400"
                                     />
                                 </div>
@@ -45,6 +60,7 @@ const Login = () => {
 
                             <div>
                                 <input
+                                    ref={email}
                                     type="email"
                                     placeholder="Email or phone number"
                                     name="email"
@@ -54,6 +70,7 @@ const Login = () => {
 
                             <div>
                                 <input
+                                    ref={password}
                                     type="password"
                                     placeholder="Password"
                                     name="password"
@@ -61,9 +78,12 @@ const Login = () => {
                                 />
                             </div>
 
+                            <p className='text-red-500'>{errorMessage}</p>
+
                             <button
                                 type="submit"
                                 className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-4 rounded-md transition duration-200"
+                                onClick={handleButtonClick}
                             >
                                 {isSignInForm ? "Sign In" : "Sign Up"}
                             </button>
