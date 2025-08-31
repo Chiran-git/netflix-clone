@@ -31,13 +31,7 @@ const Login = () => {
 
     if (isSignInForm) {
 
-      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-        .then(() => {
-          navigate("/browse");
-        })
-        .catch((error) => {
-          setErrorMessage(`${error.code} : ${error.message}`)
-        });
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value);
     }
 
     if (!isSignInForm) {
@@ -57,7 +51,6 @@ const Login = () => {
               })
             );
           });
-          navigate('/browse');
         })
         .catch((error) => {
           setErrorMessage(`${error.code} : ${error.message}`)

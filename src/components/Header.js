@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { removeUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser, removeUser } from "../utils/userSlice";
+import { USER_PROFILE_IMAGE_PLACEHOLDER } from "../utils/constants";
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -11,11 +13,29 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+        dispatch(addUser({
+          uid,
+          email,
+          displayName
+        }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    })
+    // Unsubscribe when the component unmounts
+    return () => unsubscribe();
+  }, [])
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
-        navigate("/");
       })
       .catch((error) => {
         console.error("Sign out error:", error);
@@ -30,7 +50,7 @@ const Header = () => {
         <div className="relative flex items-center">
           <span className="mr-2">{user.displayName}</span>
           <img
-            src="https://i.pinimg.com/564x/5b/50/e7/5b50e75d07c726d36f397f6359098f58.jpg"
+            src={USER_PROFILE_IMAGE_PLACEHOLDER}
             alt="Profile"
             className="w-8 h-8 rounded cursor-pointer"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
