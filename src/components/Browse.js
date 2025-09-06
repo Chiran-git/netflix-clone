@@ -7,7 +7,7 @@ const Browse = () => {
     useNowPlayingMovies();
 
     return (
-        <div className="bg-black">
+        <div className="bg-black relative">
             <Header />
             <MainContainer />
             <SecondaryContainer />

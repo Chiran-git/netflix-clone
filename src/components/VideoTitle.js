@@ -3,7 +3,7 @@ import { PlayIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
 const VideoTitle = ({ title, overview }) => {
     return (
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black via-transparent to-transparent">
-            <div className="absolute bottom-0 left-0 p-4 md:p-8 lg:p-12 xl:p-16 max-w-2xl">
+            <div className="absolute bottom-20 left-0 p-4 md:p-8 lg:p-12 xl:p-16 max-w-2xl">
                 <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 drop-shadow-lg">
                     {title}
                 </h1>
