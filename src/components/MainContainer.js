@@ -8,12 +8,12 @@ const MainContainer = () => {
     if(!movies) return;
 
     const mainMovie = movies[0];
+    const { id, original_title, overview, backdrop_path } = mainMovie;
     
-    const { original_title, overview } = mainMovie;
     return (
-        <div>
+        <div className="relative h-screen">
+            <VideoBackground movieId={id} backdropPath={backdrop_path} />
             <VideoTitle title={original_title} overview={overview} />
-            <VideoBackground />
         </div>
     )
 }
