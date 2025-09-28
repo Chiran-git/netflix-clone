@@ -4,6 +4,8 @@ export const API_OPTIONS = {
     method: 'GET',
     headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmZkYmZjZjQwMGJhNjFjY2E4OWFiZmUwMDg4NWVkOCIsIm5iZiI6MTc1NzEzNzI0MC41NTIsInN1YiI6IjY4YmJjOTU4ZWQyOTYzMGNkZDA2OTZhYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.V9DGFBcUfChDlzxE8MgwHs9VGiYglVhwNIPugT10aSg'
+        Authorization: 'Bearer' + process.env.TMDB_KEY
     }
 };
+
+export const OPENAI_KEY= process.env.OPENAI_KEY
